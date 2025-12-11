@@ -4,13 +4,14 @@ Website Node.js untuk deteksi IP, WHOIS lookup, Ping, Traceroute, DNS lookup, da
 
 ## 📋 Fitur
 
-- **🔍 Deteksi IP Saya** - Mendeteksi IP address client
-- **🔎 WHOIS Lookup** - Informasi detail tentang IP address
-- **📡 Ping** - Cek connectivity ke IP address
-- **🛣️ Traceroute** - Trace rute paket ke tujuan
-- **🔤 DNS Lookup** - Resolve hostname ke IP address
-- **📍 NSLookup** - Reverse lookup IP ke hostname
-- **⛏️ DIG** - DNS Information Groper dengan berbagai record type (A, AAAA, MX, NS, TXT, CNAME, SOA)
+- **🔍 Deteksi IP Saya** - Mendeteksi IP address client (public/local)
+- **🔎 WHOIS Lookup** - Informasi detail IP/domain dengan ASN & geo
+- **🛰️ BGP Tools** - Upstream ASN, holder, IRR validation, reverse DNS sample
+- **🧮 IP Calculator** - IPv4/IPv6 subnet calculator (compressed/expanded/binary)
+- **✂️ Subnet Splitter** - Bagi subnet IPv4/IPv6 ke prefix lebih kecil
+- **📧 Email Tools** - SPF, DMARC, DKIM, MX, TXT checks
+- **📡 Ping & 🛣️ Traceroute** - Cek konektivitas dan rute
+- **🔤 DNS / 📍 NSLookup / ⛏️ DIG** - Lookup DNS lengkap (A, AAAA, MX, NS, TXT, CNAME, SOA)
 
 ## 🚀 Quick Start
 
@@ -35,96 +36,67 @@ docker-compose logs -f whois-app
 
 Website akan berjalan di: **http://localhost:3000**
 
-## 📚 API Endpoints
+## 📚 API Endpoints (ringkas)
 
-### 1. Get My IP
-```bash
-GET /api/myip
-```
+1) **GET /api/myip** – Deteksi IP client (public/local)
 
-**Response:**
+2) **POST /api/whois**
 ```json
-{
-  "success": true,
-  "ip": "YOUR.IP.ADDRESS",
-  "timestamp": "2024-12-11T10:00:00.000Z"
-}
+{ "ip": "8.8.8.8" }
+```
+Menerima IP atau domain. Untuk IP menampilkan geo + ASN.
+
+3) **POST /api/bgp-tools**
+```json
+{ "query": "AS15169" }
+```
+Menerima IP atau ASN; hasil upstream, holder, IRR sample, reverse DNS sample.
+
+4) **POST /api/ip-calculator** (IPv4/IPv6)
+```json
+{ "address": "2001:df6:3dc0::/48", "netmask": "" }
+```
+`netmask` opsional untuk IPv4 jika tidak memakai CIDR.
+
+5) **POST /api/ip-split** (IPv4/IPv6 subnet splitter)
+```json
+{ "address": "2001:df6:3dc0::/48", "newPrefix": "64" }
 ```
 
-### 2. WHOIS Lookup
-```bash
-POST /api/whois
-Content-Type: application/json
-
-{
-  "ip": "8.8.8.8"
-}
+6) **POST /api/email-check** (SPF/DMARC/DKIM/MX/TXT)
+```json
+{ "domain": "example.com" }
 ```
 
-### 3. Ping
-```bash
-POST /api/ping
-Content-Type: application/json
-
-{
-  "ip": "8.8.8.8",
-  "count": 4
-}
+7) **POST /api/ping**
+```json
+{ "ip": "8.8.8.8", "count": 4 }
 ```
 
-### 4. Traceroute
-```bash
-POST /api/traceroute
-Content-Type: application/json
-
-{
-  "ip": "8.8.8.8",
-  "maxHops": 30
-}
+8) **POST /api/traceroute**
+```json
+{ "ip": "8.8.8.8", "maxHops": 30 }
 ```
 
-### 5. DNS Lookup
-```bash
-POST /api/dns
-Content-Type: application/json
-
-{
-  "hostname": "google.com"
-}
+9) **POST /api/dns**
+```json
+{ "hostname": "google.com" }
 ```
 
-### 6. NSLookup
-```bash
-POST /api/nslookup
-Content-Type: application/json
-
-{
-  "query": "8.8.8.8"
-}
+10) **POST /api/nslookup**
+```json
+{ "query": "8.8.8.8" }
 ```
 
-### 7. DIG
-```bash
-POST /api/dig
-Content-Type: application/json
-
-{
-  "domain": "google.com",
-  "recordType": "A"
-}
+11) **POST /api/dig**
+```json
+{ "domain": "google.com", "recordType": "A" }
 ```
+Record type: A, AAAA, MX, NS, TXT, CNAME, SOA.
 
-Record types tersedia: A, AAAA, MX, NS, TXT, CNAME, SOA
+12) **GET /api/docs** – Ringkasan endpoint
 
-### 8. API Documentation
-```bash
-GET /api/docs
-```
-
-### 9. Health Check
-```bash
-GET /health
-```
+13) **GET /health** – Health check
 
 ## 📁 Struktur Folder
 
