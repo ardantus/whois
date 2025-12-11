@@ -21,7 +21,7 @@ Website Node.js untuk deteksi IP, WHOIS lookup, Ping, Traceroute, DNS lookup, da
 
 ```bash
 # Masuk ke folder project
-cd /Users/ziege/Documents/Documents/github.com/whois
+cd whois
 
 # Build dan run
 docker-compose up -d
