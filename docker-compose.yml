@@ -1,0 +1,23 @@
+services:
+  whois-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: whois-website
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+    cap_add:
+      - NET_RAW
+      - NET_ADMIN
+    restart: unless-stopped
+    volumes:
+      - ./logs:/app/logs
+    networks:
+      - whois-network
+
+networks:
+  whois-network:
+    driver: bridge
