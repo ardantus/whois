@@ -252,6 +252,126 @@ curl -X POST https://whois.ardan.ovh/api/email-check \
   -d '{"domain":"google.com"}'
 ```
 
+#### Response Examples (Akses via Browser atau cURL)
+
+**GET https://whois.ardan.ovh/api/myip**
+```json
+{
+  "success": true,
+  "ip": "203.0.113.42",
+  "timestamp": "2025-12-12T10:30:45.123Z"
+}
+```
+
+**POST https://whois.ardan.ovh/api/whois** (dengan IP: 8.8.8.8)
+```json
+{
+  "success": true,
+  "whois": "Google LLC\nASN: 15169\nCountry: US",
+  "asn": "15169",
+  "holder": "Google LLC",
+  "country": "US",
+  "timestamp": "2025-12-12T10:30:45.123Z"
+}
+```
+
+**POST https://whois.ardan.ovh/api/dns** (hostname: google.com)
+```json
+{
+  "success": true,
+  "hostname": "google.com",
+  "records": {
+    "A": ["142.251.32.14", "142.251.32.46"],
+    "AAAA": ["2607:f8b0:4004:820::200e"],
+    "MX": ["10 smtp.google.com"],
+    "NS": ["ns1.google.com", "ns2.google.com"]
+  },
+  "timestamp": "2025-12-12T10:30:45.123Z"
+}
+```
+
+**POST https://whois.ardan.ovh/api/ping** (IP: 8.8.8.8, count: 4)
+```json
+{
+  "success": true,
+  "host": "8.8.8.8",
+  "min": "12.345ms",
+  "avg": "14.234ms",
+  "max": "16.123ms",
+  "mdev": "1.456ms",
+  "packets_transmitted": 4,
+  "packets_received": 4,
+  "packet_loss": "0%",
+  "timestamp": "2025-12-12T10:30:45.123Z"
+}
+```
+
+**POST https://whois.ardan.ovh/api/ip-calculator** (address: 192.168.0.0/24)
+```json
+{
+  "success": true,
+  "input": "192.168.0.0/24",
+  "address": "192.168.0.0",
+  "netmask": "255.255.255.0",
+  "prefix": 24,
+  "broadcast": "192.168.0.255",
+  "first_host": "192.168.0.1",
+  "last_host": "192.168.0.254",
+  "total_hosts": 254,
+  "timestamp": "2025-12-12T10:30:45.123Z"
+}
+```
+
+**POST https://whois.ardan.ovh/api/bgp-tools** (query: AS15169)
+```json
+{
+  "success": true,
+  "query": "AS15169",
+  "asn": "AS15169",
+  "holder": "GOOGLE",
+  "country": "US",
+  "upstream": ["AS3356", "AS1299"],
+  "irr_set": "AS-GOOGLE",
+  "reverse_dns_sample": "dns.google",
+  "timestamp": "2025-12-12T10:30:45.123Z"
+}
+```
+
+**POST https://whois.ardan.ovh/api/email-check** (domain: google.com)
+```json
+{
+  "success": true,
+  "domain": "google.com",
+  "spf": "v=spf1 include:_spf.google.com ~all",
+  "dmarc": "v=DMARC1; p=reject; rua=mailto:...",
+  "mx_records": [
+    "10 smtp.google.com",
+    "20 smtp2.google.com"
+  ],
+  "has_dkim": true,
+  "timestamp": "2025-12-12T10:30:45.123Z"
+}
+```
+
+**POST https://whois.ardan.ovh/api/dig** (domain: google.com, recordType: A)
+```json
+{
+  "success": true,
+  "domain": "google.com",
+  "recordType": "A",
+  "answer": [
+    {
+      "name": "google.com",
+      "ttl": 300,
+      "class": "IN",
+      "type": "A",
+      "address": "142.251.32.14"
+    }
+  ],
+  "timestamp": "2025-12-12T10:30:45.123Z"
+}
+```
+
 ## ⚠️ Security Notes
 
 - Input validation dilakukan untuk mencegah command injection
