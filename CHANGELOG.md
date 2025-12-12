@@ -2,6 +2,23 @@
 
 All notable changes to WhoisIP project will be documented in this file.
 
+## [1.4.1] - 2025-12-12
+
+### Fixed
+- **IP Detection Bug** - Fixed `/api/myip` endpoint detecting server IP instead of client IP
+  - Removed external API call (`ipify.org`) that incorrectly returned server's public IP
+  - Implemented proper client IP detection from request headers
+  - Now correctly reads `x-forwarded-for` header for proxied connections
+  - Fallback to `socket.remoteAddress` for direct connections
+  - Proper handling of IPv6-mapped IPv4 addresses (removes `::ffff:` prefix)
+  - Removes port numbers from returned IP addresses
+- Updated frontend IP type label from "Public/Local IP" to "Client IP"
+
+### Technical
+- Implemented `getClientIP()` helper function in `/api/myip` endpoint
+- Better header parsing for production environments (proxies, load balancers)
+- More robust IPv6 to IPv4 conversion logic
+
 ## [1.4.0] - 2025-12-11
 
 ### Added
