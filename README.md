@@ -160,6 +160,8 @@ environment:
 
 ## 💻 Testing API dengan cURL
 
+### Local Development (localhost:3000)
+
 ```bash
 # Get my IP
 curl http://localhost:3000/api/myip
@@ -183,6 +185,71 @@ curl -X POST http://localhost:3000/api/traceroute \
 curl -X POST http://localhost:3000/api/dig \
   -H "Content-Type: application/json" \
   -d '{"domain":"google.com","recordType":"A"}'
+```
+
+### Production (whois.ardan.ovh)
+
+#### Direct URL Access (Browser)
+```
+https://whois.ardan.ovh/api/myip
+https://whois.ardan.ovh
+```
+
+#### cURL Examples
+
+```bash
+# Get my IP
+curl https://whois.ardan.ovh/api/myip
+
+# WHOIS lookup
+curl -X POST https://whois.ardan.ovh/api/whois \
+  -H "Content-Type: application/json" \
+  -d '{"ip":"8.8.8.8"}'
+
+# WHOIS lookup with domain
+curl -X POST https://whois.ardan.ovh/api/whois \
+  -H "Content-Type: application/json" \
+  -d '{"ip":"google.com"}'
+
+# Ping
+curl -X POST https://whois.ardan.ovh/api/ping \
+  -H "Content-Type: application/json" \
+  -d '{"ip":"8.8.8.8","count":4}'
+
+# Traceroute
+curl -X POST https://whois.ardan.ovh/api/traceroute \
+  -H "Content-Type: application/json" \
+  -d '{"ip":"8.8.8.8","maxHops":30}'
+
+# DNS Lookup
+curl -X POST https://whois.ardan.ovh/api/dns \
+  -H "Content-Type: application/json" \
+  -d '{"hostname":"google.com"}'
+
+# DIG query
+curl -X POST https://whois.ardan.ovh/api/dig \
+  -H "Content-Type: application/json" \
+  -d '{"domain":"google.com","recordType":"A"}'
+
+# BGP Tools
+curl -X POST https://whois.ardan.ovh/api/bgp-tools \
+  -H "Content-Type: application/json" \
+  -d '{"query":"AS15169"}'
+
+# IP Calculator
+curl -X POST https://whois.ardan.ovh/api/ip-calculator \
+  -H "Content-Type: application/json" \
+  -d '{"address":"192.168.0.0/24","netmask":""}'
+
+# Subnet Splitter
+curl -X POST https://whois.ardan.ovh/api/ip-split \
+  -H "Content-Type: application/json" \
+  -d '{"address":"192.168.0.0/24","newPrefix":"25"}'
+
+# Email Records Check
+curl -X POST https://whois.ardan.ovh/api/email-check \
+  -H "Content-Type: application/json" \
+  -d '{"domain":"google.com"}'
 ```
 
 ## ⚠️ Security Notes
