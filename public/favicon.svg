@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <!-- Background -->
+  <rect width="256" height="256" fill="#667eea"/>
+  
+  <!-- Globe circle -->
+  <circle cx="128" cy="128" r="110" fill="#e8f1ff" stroke="#667eea" stroke-width="2"/>
+  
+  <!-- Globe continents (simplified) -->
+  <ellipse cx="100" cy="110" rx="25" ry="30" fill="#667eea" opacity="0.6"/>
+  <ellipse cx="150" cy="130" rx="20" ry="25" fill="#667eea" opacity="0.6"/>
+  <ellipse cx="130" cy="160" rx="18" ry="20" fill="#667eea" opacity="0.6"/>
+  
+  <!-- Grid lines for network effect -->
+  <circle cx="128" cy="128" r="85" fill="none" stroke="#667eea" stroke-width="1" opacity="0.3"/>
+  <circle cx="128" cy="128" r="60" fill="none" stroke="#667eea" stroke-width="1" opacity="0.3"/>
+  <circle cx="128" cy="128" r="35" fill="none" stroke="#667eea" stroke-width="1" opacity="0.3"/>
+  
+  <!-- Horizontal line -->
+  <line x1="45" y1="128" x2="211" y2="128" stroke="#667eea" stroke-width="1" opacity="0.3"/>
+  <!-- Vertical line -->
+  <line x1="128" y1="45" x2="128" y2="211" stroke="#667eea" stroke-width="1" opacity="0.3"/>
+  
+  <!-- Network nodes -->
+  <circle cx="80" cy="90" r="4" fill="#764ba2"/>
+  <circle cx="180" cy="100" r="4" fill="#764ba2"/>
+  <circle cx="140" cy="180" r="4" fill="#764ba2"/>
+  <circle cx="110" cy="160" r="4" fill="#764ba2"/>
+  
+  <!-- Center node (brighter) -->
+  <circle cx="128" cy="128" r="6" fill="#764ba2"/>
+  
+  <!-- IP symbol: dots -->
+  <text x="128" y="220" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#764ba2">IP</text>
+</svg>
