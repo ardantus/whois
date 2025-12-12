@@ -828,7 +828,11 @@
         
         if (data.success) {
           document.getElementById('myIp').textContent = data.ip;
-          document.getElementById('ipType').textContent = `(${data.type === 'public' ? 'Public IP' : 'Local IP'})`;
+          // Remove type display atau update ke format baru
+          const ipTypeEl = document.getElementById('ipType');
+          if (ipTypeEl) {
+            ipTypeEl.textContent = '(Client IP)';
+          }
           
           // Load detailed IP information
           await loadIPDetails(data.ip);

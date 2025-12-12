@@ -143,38 +143,45 @@ function sanitizeInput(input) {
   return input.replace(/[;&|`$()\\]/g, '');
 }
 
-// 1. GET MY IP - Deteksi IP client/public
+// 1. GET MY IP - Deteksi IP client/pengakses (bukan IP server)
 app.get('/api/myip', async (req, res) => {
   try {
-    // Coba dapatkan public IP dari external API
-    try {
-      const response = await axios.get('https://api.ipify.org?format=json', { timeout: 3000 });
-      const publicIP = response.data.ip;
+    // Fungsi helper untuk mendapatkan client IP dengan benar
+    function getClientIP(request) {
+      // Cek header x-forwarded-for (untuk proxy/load balancer)
+      let ip = request.headers['x-forwarded-for'];
       
-      res.json({
-        success: true,
-        ip: publicIP,
-        type: 'public',
-        timestamp: new Date().toISOString()
-      });
-      return;
-    } catch (apiError) {
-      // Fallback ke local IP jika API fail
-      console.log('Public IP API failed, using local IP:', apiError.message);
+      if (ip) {
+        // x-forwarded-for bisa berisi multiple IPs, ambil yang pertama
+        ip = ip.split(',')[0].trim();
+      }
+      
+      // Fallback ke connection remoteAddress
+      if (!ip || ip === 'undefined') {
+        ip = request.socket?.remoteAddress || 
+             request.connection?.remoteAddress ||
+             request.ip;
+      }
+      
+      // Remove IPv6 prefix (::ffff:) jika ada
+      if (ip && ip.includes('::ffff:')) {
+        ip = ip.split('::ffff:')[1];
+      }
+      
+      // Remove port number jika ada
+      if (ip && ip.includes(':')) {
+        ip = ip.split(':')[0];
+      }
+      
+      return ip || 'unknown';
     }
-
-    // Fallback: deteksi local IP
-    const clientIP = req.headers['x-forwarded-for'] || 
-                     req.connection.remoteAddress || 
-                     req.socket.remoteAddress ||
-                     req.ip;
     
-    const cleanIP = clientIP.includes(':') ? clientIP.split(':').pop() : clientIP;
+    // Dapatkan IP pengakses dari request
+    const clientIP = getClientIP(req);
     
     res.json({
       success: true,
-      ip: cleanIP,
-      type: 'local',
+      ip: clientIP,
       timestamp: new Date().toISOString()
     });
   } catch (error) {
